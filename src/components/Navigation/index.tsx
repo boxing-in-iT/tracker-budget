@@ -63,7 +63,12 @@ const ImageAccount = styled.img`
   cursor: pointer;
 `;
 
-const Navigation = () => {
+interface NavigationProps {
+  userName: any;
+}
+
+const Navigation = (props: NavigationProps) => {
+  const { userName } = props;
   return (
     <Header>
       <Container>
@@ -77,7 +82,8 @@ const Navigation = () => {
         </Left>
 
         <Account>
-          <ImageAccount src={AccountImage} />
+          {/* <ImageAccount src={AccountImage} /> */}
+          <h3>{userName}</h3>
         </Account>
       </Container>
     </Header>
