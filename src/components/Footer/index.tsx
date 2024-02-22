@@ -10,7 +10,6 @@ const Footer = styled.footer`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   padding: 20px;
 `;
 

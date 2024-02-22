@@ -3,16 +3,20 @@ import styled from "styled-components";
 import AccountImage from "../../assets/img/account.svg";
 
 const Header = styled.header`
-  background-color: #233142;
+  /* background-color: #233142; */
+  margin-top: 2rem;
 `;
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80vw;
+  width: 85vw;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
   margin: 0 auto;
   background-color: #233142;
+  border-radius: 50px;
 `;
 
 const Left = styled.div`
@@ -22,7 +26,7 @@ const Left = styled.div`
 `;
 
 const Logo = styled.h2`
-  color: #e3e3e3;
+  color: #f95959; /* Цвет текста */
 `;
 
 const Menu = styled.ul`
@@ -69,7 +73,7 @@ const Navigation = (props: NavigationProps) => {
     <Header>
       <Container>
         <Left>
-          <Logo>Logo</Logo>
+          <Logo>BudgetTracker</Logo>
           <Menu>
             <MenuItem>Main</MenuItem>
             <MenuItem>Expenses</MenuItem>
