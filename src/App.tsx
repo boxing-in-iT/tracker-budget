@@ -4,6 +4,7 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import styled from "styled-components";
 import Footer from "./components/Footer";
+import WelcomePage from "./pages/WelcomePage";
 
 const Page = styled.div`
   overflow: hidden;
@@ -21,7 +22,9 @@ function App() {
   return (
     <Page>
       <Navigation />
-      <Main></Main>
+      <Main>
+        <WelcomePage />
+      </Main>
       <Footer />
     </Page>
   );
