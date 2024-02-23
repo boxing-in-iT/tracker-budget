@@ -1,16 +1,9 @@
-import { wait } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import styled from "styled-components";
-import { waait } from "../../helpers/helper";
-import { Form, redirect, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  margin-top: 8%;
 `;
 
 const Box = styled.div`
@@ -29,7 +22,7 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const FormSt = styled(Form)`
+const FormSt = styled.form`
   display: flex;
   flex-direction: column;
 
@@ -59,139 +52,34 @@ const FormSt = styled(Form)`
   }
 `;
 
-const RememberMeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-`;
-
-const RememberMeLabel = styled.label`
-  color: #fff;
-  margin-right: 0.5rem;
-`;
-
-const ForgotPassword = styled.span`
-  color: #fff;
-  text-decoration: underline;
-  cursor: pointer;
-  align-self: center;
-  margin-top: 5rem;
-`;
-
-interface LoginPageProps {
-  isRegistering: string;
+interface LoginProps {
+  onSubmit: (username: string) => void;
 }
 
-const LoginPage = (props: LoginPageProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [userName, setUserName] = useState(""); // Добавлено состояние для имени пользователя
-  const navigate = useNavigate();
+const LoginPage = (props: LoginProps) => {
+  const [userName, setUserName] = useState(""); // State for the username
 
-  const { isRegistering } = props;
+  const { onSubmit } = props;
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleRememberMeChange = () => {
-    setRememberMe(!rememberMe);
-  };
-
-  const handleForgotPassword = () => {
-    // Redirect to forgot password page
-  };
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic
-    if (isRegistering) {
-      if (password === confirmPassword) {
-        // Пароли совпадают, можно обрабатывать регистрацию
-        setPasswordsMatch(true);
-        registration(); // Вызываем функцию для регистрации пользователя
-      } else {
-        // Пароли не совпадают
-        setPasswordsMatch(false);
-      }
-    } else {
-      // Обработка логина
-    }
-  };
-
-  const registration = async () => {
-    await waait();
-    try {
-      localStorage.setItem("userName", JSON.stringify(userName)); // Сохранение имени пользователя
-      navigate("/");
-      return toast.success(`Welcome, ${userName}`);
-    } catch (e) {
-      throw new Error("There was a problem creating your account.");
-    }
+    // Pass the username to the parent component
+    onSubmit(userName);
   };
 
   return (
     <Container>
       <Box>
-        <Title>{isRegistering ? "Register" : "Login"}</Title>
+        <Title>Register</Title>
         <FormSt onSubmit={handleSubmit}>
-          {isRegistering && (
-            <>
-              <input
-                type="text"
-                placeholder="Username"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />{" "}
-              {/* Добавляем поле для ввода имени пользователя */}
-              {/* Это добавить позже пока что просто имя */}
-              {/* <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              {!passwordsMatch && (
-                <span style={{ color: "red" }}>Passwords do not match</span>
-              )} */}
-            </>
-          )}
-          {!isRegistering && (
-            <>
-              <input type="text" placeholder="Username" />
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-              />
-            </>
-          )}
-          {/* {!isRegistering ? (
-            <RememberMeContainer>
-              <RememberMeLabel>Remember me</RememberMeLabel>
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={handleRememberMeChange}
-              />
-            </RememberMeContainer>
-          ) : null} */}
-
-          <button type="submit">{isRegistering ? "Register" : "Login"}</button>
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button type="submit">Register</button>
         </FormSt>
-        {/* {!isRegistering && (
-          <ForgotPassword onClick={handleForgotPassword}>
-            Forgot password?
-          </ForgotPassword>
-        )} */}
       </Box>
     </Container>
   );

@@ -8,7 +8,7 @@ const CardWrapper = styled.div`
   padding: 20px;
   min-width: 300px;
   max-width: 80vw;
-  margin: 20px;
+  /* margin: 20px; */
 `;
 
 const Card = styled.div`
