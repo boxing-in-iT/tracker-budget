@@ -18,6 +18,7 @@ import {
 import Main, { mainLoader } from "./components/Main";
 import Dashboard, { dashboardLoader } from "./pages/Dashboard";
 import { logoutAction } from "./actions/logoutAction";
+import WelcomePage from "./pages/WelcomePage";
 // import { logoutAction } from "./actions/logoutAction";
 
 const Page = styled.div`
@@ -48,7 +49,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <LoginPage isRegistering="Register" />,
+    // element: <LoginPage isRegistering="Register" />,
+    element: <WelcomePage />,
   },
 ]);
 
