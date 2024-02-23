@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import AccountImage from "../../assets/img/account.svg";
+import { Form } from "react-router-dom";
 
 const Header = styled.header`
-  /* background-color: #233142; */
   margin-top: 2rem;
 `;
 
@@ -12,8 +12,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 85vw;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
+  padding: 1.5rem 2.5vw;
   margin: 0 auto;
   background-color: #233142;
   border-radius: 50px;
@@ -22,18 +21,15 @@ const Container = styled.div`
 const Left = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 const Logo = styled.h2`
-  color: #f95959; /* Цвет текста */
+  color: #f95959;
+  margin-right: 2rem;
 `;
 
 const Menu = styled.ul`
-  margin-top: 1.25em;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: 2em;
 `;
 
@@ -56,11 +52,34 @@ const MenuItem = styled.li`
   }
 `;
 
-const Account = styled.div``;
+const Account = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const ImageAccount = styled.img`
   width: 2rem;
+  margin-right: 1rem;
   cursor: pointer;
+`;
+
+const UserName = styled.h3`
+  color: #e3e3e3;
+  margin-right: 1rem;
+`;
+
+const DeleteButton = styled.button`
+  background-color: #f95959;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d63737;
+  }
 `;
 
 interface NavigationProps {
@@ -82,8 +101,21 @@ const Navigation = (props: NavigationProps) => {
         </Left>
 
         <Account>
-          {/* <ImageAccount src={AccountImage} /> */}
-          <h3>{userName}</h3>
+          <ImageAccount src={AccountImage} />
+          <UserName>{userName}</UserName>
+          {userName && (
+            <Form
+              method="post"
+              action="logout"
+              onSubmit={(event) => {
+                if (!window.confirm("Delete user and all data?")) {
+                  event.preventDefault();
+                }
+              }}
+            >
+              <DeleteButton type="submit">Delete User</DeleteButton>
+            </Form>
+          )}
         </Account>
       </Container>
     </Header>

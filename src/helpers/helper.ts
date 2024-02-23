@@ -5,10 +5,19 @@ export const waait = () =>
 
 export const fetchData = (key: string) => {
   const data = localStorage.getItem(key);
-  if (data === null) {
-    // Handle the case where the item is not found in localStorage
-    // You may want to return a default value or throw an error
-    throw new Error(`Item with key '${key}' not found in localStorage`);
+  if (data !== null) {
+    return JSON.parse(data);
   }
-  return JSON.parse(data);
+  return null;
+};
+
+//delete item
+export const deleteItem = ({ key, id }: any) => {
+  debugger;
+  const existingData = fetchData(key);
+  if (id) {
+    const newData = existingData.filter((item: any) => item.id !== id);
+    return localStorage.setItem(key, JSON.stringify(newData));
+  }
+  return localStorage.removeItem(key);
 };

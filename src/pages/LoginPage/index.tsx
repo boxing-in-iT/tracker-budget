@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { waait } from "../../helpers/helper";
+import { Form, redirect, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +29,7 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Form = styled.form`
+const FormSt = styled(Form)`
   display: flex;
   flex-direction: column;
 
@@ -87,6 +89,7 @@ const LoginPage = (props: LoginPageProps) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [userName, setUserName] = useState(""); // Добавлено состояние для имени пользователя
+  const navigate = useNavigate();
 
   const { isRegistering } = props;
 
@@ -123,6 +126,7 @@ const LoginPage = (props: LoginPageProps) => {
     await waait();
     try {
       localStorage.setItem("userName", JSON.stringify(userName)); // Сохранение имени пользователя
+      navigate("/");
       return toast.success(`Welcome, ${userName}`);
     } catch (e) {
       throw new Error("There was a problem creating your account.");
@@ -133,7 +137,7 @@ const LoginPage = (props: LoginPageProps) => {
     <Container>
       <Box>
         <Title>{isRegistering ? "Register" : "Login"}</Title>
-        <Form onSubmit={handleSubmit}>
+        <FormSt onSubmit={handleSubmit}>
           {isRegistering && (
             <>
               <input
@@ -182,7 +186,7 @@ const LoginPage = (props: LoginPageProps) => {
           ) : null} */}
 
           <button type="submit">{isRegistering ? "Register" : "Login"}</button>
-        </Form>
+        </FormSt>
         {/* {!isRegistering && (
           <ForgotPassword onClick={handleForgotPassword}>
             Forgot password?

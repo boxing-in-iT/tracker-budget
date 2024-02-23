@@ -16,8 +16,9 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Main, { mainLoader } from "./components/Main";
-import Dashboard from "./pages/Dashboard";
-
+import Dashboard, { dashboardLoader } from "./pages/Dashboard";
+import { logoutAction } from "./actions/logoutAction";
+// import { logoutAction } from "./actions/logoutAction";
 
 const Page = styled.div`
   overflow: hidden;
@@ -37,8 +38,17 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+        loader: dashboardLoader,
+      },
+      {
+        path: "/logout",
+        action: logoutAction,
       },
     ],
+  },
+  {
+    path: "/register",
+    element: <LoginPage isRegistering="Register" />,
   },
 ]);
 
@@ -48,7 +58,6 @@ function App() {
       <RouterProvider router={router} />
       <ToastContainer />
     </>
-
   );
 }
 
