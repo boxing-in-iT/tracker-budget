@@ -3,6 +3,7 @@ import { fetchData } from "../../helpers/helper";
 import { Navigate, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import AddBudgetForm from "./src/add-budget-form";
+import AddExpenseForm from "./src/add-expense-form";
 
 const DashboardWrapper = styled.div`
   display: grid;
@@ -25,42 +26,66 @@ const FlexLg = styled.div`
 `;
 
 const FirstDiv = styled.div`
-  width: 75%; /* 3/4 ширины */
+  width: 50%; /* 3/4 ширины */
 `;
 
 const SecondDiv = styled.div`
-  width: 25%; /* 1/4 ширины */
+  width: 50%; /* 1/4 ширины */
+`;
+
+const MessageContainer = styled.div`
+  margin-top: 10%;
+  background-color: #233142;
+  padding: 1rem;
+  border-radius: 25px;
+  color: #e3e3e3;
 `;
 
 export function dashboardLoader() {
   const userName = fetchData("userName");
+  const budgets = fetchData("budgets");
   console.log(typeof userName);
-  return { userName };
+  return { userName, budgets };
 }
 
 export type UserData = {
   userName: string;
+  budgets: [];
 };
 
 const Dashboard = () => {
-  const { userName } = useLoaderData() as UserData;
+  const { userName, budgets } = useLoaderData() as UserData;
   console.log("UserName: ", userName);
 
   if (!userName) {
-    // Выполните редирект, обернув его в условие внутри useEffect
     return <Navigate to={"/register"} />;
   }
 
   return userName ? (
     <DashboardWrapper>
       <h1>Привет, {userName}</h1>
+
       <GridSm>
-        <FlexLg>
-          <FirstDiv>
+        {budgets && budgets.length > 0 ? (
+          <FlexLg>
+            {/* <FirstDiv> */}
             <AddBudgetForm />
-          </FirstDiv>
-          <SecondDiv>2</SecondDiv>
-        </FlexLg>
+            {/* </FirstDiv> */}
+            {/* <SecondDiv> */}
+            <AddExpenseForm />
+            {/* </SecondDiv> */}
+          </FlexLg>
+        ) : (
+          <FlexLg>
+            <FirstDiv>
+              <AddBudgetForm />
+            </FirstDiv>
+            <MessageContainer>
+              <p>Личный бюджет – это секрет финансовой свободы.</p>
+              <p>Создайте бюджет, чтобы начать!</p>
+            </MessageContainer>
+          </FlexLg>
+        )}
       </GridSm>
     </DashboardWrapper>
   ) : null;

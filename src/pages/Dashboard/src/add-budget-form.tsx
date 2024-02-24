@@ -77,7 +77,7 @@ const AddBudgetForm = () => {
             inputMode="decimal"
           />
         </GridXs>
-        <button type="submit">Зарегистрировать</button>
+        <button type="submit">Создать</button>
       </FormSt>
     </Box>
   );
