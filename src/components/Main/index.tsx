@@ -17,6 +17,7 @@ const Page = styled.div`
 
 const MainWrapper = styled.div`
   width: 80vw;
+  padding: 2rem;
   flex: 1;
 `;
 

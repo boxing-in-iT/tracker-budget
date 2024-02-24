@@ -12,7 +12,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 85vw;
-  padding: 1.5rem 2.5vw;
+  padding: 0.5rem 2.5vw;
   margin: 0 auto;
   background-color: #233142;
   border-radius: 50px;
