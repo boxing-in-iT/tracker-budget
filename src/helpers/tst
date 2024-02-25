@@ -1,0 +1,38 @@
+ // <DashboardWrapper>
+    //   <Title>Привет, {userName}</Title>
+
+    //   <GridSm>
+    //     {budgets && budgets.length > 0 ? (
+    //       <>
+    //         <FlexLg>
+    //           {/* <FirstDiv> */}
+    //           <AddBudgetForm creatingBudget={creatingBudget} />
+    //           {/* </FirstDiv> */}
+    //           {/* <SecondDiv> */}
+    //           <AddExpenseForm
+    //             budgets={budgets}
+    //             creatingExpense={creatingExpense}
+    //           />
+    //           {/* </SecondDiv> */}
+    //         </FlexLg>
+    //         <h2>Созданные бюджеты</h2>
+    //         <Budgets>
+    //           {budgets.map((budget, id) => (
+    //             <BudgetItem key={id} budget={budget} />
+    //           ))}
+    //         </Budgets>
+    //       </>
+    //     ) : (
+    //       <FlexLg>
+    //         <FirstDiv>
+    //           <AddBudgetForm creatingBudget={createBudget} />
+    //         </FirstDiv>
+    //         <MessageContainer>
+    //           <p>Личный бюджет – это секрет финансовой свободы.</p>
+    //           <p>Создайте бюджет, чтобы начать!</p>
+    //         </MessageContainer>
+    //       </FlexLg>
+    //     )}
+    //   </GridSm>
+    // </DashboardWrapper>
+    // <ExpensesTable expenses={expenses} />

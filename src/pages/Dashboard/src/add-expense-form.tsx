@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 export const formStyles = `
@@ -82,15 +82,59 @@ const Label = styled.label`
   font-size: 1.2rem;
 `;
 
-const AddExpenseForm = () => {
+interface Budget {
+  amount: number;
+  color: string;
+  createdAt: number;
+  id: string;
+  name: string;
+}
+
+interface ExpenseProps {
+  budgets: Budget[];
+  creatingExpense: ({
+    name,
+    amount,
+    budgetId,
+  }: {
+    name: string;
+    amount: number;
+    budgetId: string;
+  }) => void;
+}
+
+const AddExpenseForm = (props: ExpenseProps) => {
+  const { budgets, creatingExpense } = props;
+
+  const [expenseName, setExpenseName] = useState("");
+  const [expenseAmount, setExpenseAmount] = useState(0);
+  const [budgetId, setBudgetId] = useState(budgets[0].id);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    {
+      e.preventDefault();
+
+      creatingExpense({
+        name: expenseName,
+        amount: expenseAmount,
+        budgetId: budgetId,
+      });
+    }
+  };
+
   return (
     <Box>
       <Title>Добавить расходы</Title>
-      <FormSt>
+      <FormSt onSubmit={handleSubmit}>
         <ExpenseInput>
           <GridXs>
             <Label>На что потратили</Label>
-            <input type="text" placeholder="Введите название" />
+            <input
+              type="text"
+              placeholder="Введите название"
+              value={expenseName}
+              onChange={(e) => setExpenseName(e.target.value)}
+            />
           </GridXs>
           <GridXs>
             <Label htmlFor="newBudgetAmount">Сумма</Label>
@@ -102,18 +146,22 @@ const AddExpenseForm = () => {
               placeholder="например, $350"
               required
               inputMode="decimal"
+              value={expenseAmount}
+              onChange={(e) => setExpenseAmount(parseFloat(e.target.value))}
             />
           </GridXs>
         </ExpenseInput>
 
         <GridXs className="grid-xs">
           <Label htmlFor="newExpenseBudget">Budget Category</Label>
-          <select name="newExpenseBudget" id="newExpenceBudget" required>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-
-            {/* {budgets
+          <select
+            name="newExpenseBudget"
+            id="newExpenceBudget"
+            required
+            value={budgetId}
+            onChange={(e) => setBudgetId(e.target.value)}
+          >
+            {budgets
               .sort((a, b) => a.createdAt - b.createdAt)
               .map((budget) => {
                 return (
@@ -121,7 +169,7 @@ const AddExpenseForm = () => {
                     {budget.name}
                   </option>
                 );
-              })} */}
+              })}
           </select>
         </GridXs>
         <button type="submit">Добавить</button>

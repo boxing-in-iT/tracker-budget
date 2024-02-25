@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -56,14 +56,35 @@ const Label = styled.label`
   font-size: 1.2rem;
 `;
 
-const AddBudgetForm = () => {
+interface AddBudgetFormProps {
+  creatingBudget: ({ name, amount }: { name: string; amount: number }) => void;
+}
+
+const AddBudgetForm = (props: AddBudgetFormProps) => {
+  const { creatingBudget } = props;
+  const [budgetName, setBudgetName] = useState("");
+  const [budgetAmount, setBudgetAmount] = useState(0);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    {
+      e.preventDefault();
+      // Pass the username to the parent component
+      creatingBudget({ name: budgetName, amount: budgetAmount });
+    }
+  };
+
   return (
     <Box>
       <Title>Создать бюджет</Title>
-      <FormSt>
+      <FormSt onSubmit={handleSubmit}>
         <GridXs>
           <Label>Название бюджета</Label>
-          <input type="text" placeholder="Введите название" />
+          <input
+            type="text"
+            placeholder="Введите название"
+            value={budgetName}
+            onChange={(e) => setBudgetName(e.target.value)}
+          />
         </GridXs>
         <GridXs>
           <Label htmlFor="newBudgetAmount">Сумма</Label>
@@ -75,6 +96,8 @@ const AddBudgetForm = () => {
             placeholder="например, $350"
             required
             inputMode="decimal"
+            value={budgetAmount}
+            onChange={(e) => setBudgetAmount(parseFloat(e.target.value))}
           />
         </GridXs>
         <button type="submit">Создать</button>
