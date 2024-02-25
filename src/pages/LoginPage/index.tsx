@@ -70,7 +70,7 @@ const LoginPage = (props: LoginProps) => {
   return (
     <Container>
       <Box>
-        <Title>Register</Title>
+        <Title>Введите свое имя для того чтобы начать</Title>
         <FormSt onSubmit={handleSubmit}>
           <input
             type="text"
