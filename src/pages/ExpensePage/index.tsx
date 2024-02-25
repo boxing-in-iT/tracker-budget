@@ -33,8 +33,14 @@ const ExpensePage = () => {
   const { expenses, userName } = useLoaderData() as UserData;
   return (
     <PageWrapper>
-      <Title>{userName}, это ваши расходы</Title>
-      <Table expenses={expenses} />
+      {expenses && expenses.length > 0 ? (
+        <>
+          <Title>{userName}, это ваши расходы</Title>
+          <Table expenses={expenses} />
+        </>
+      ) : (
+        <Title>Expenses not created</Title>
+      )}
     </PageWrapper>
   );
 };

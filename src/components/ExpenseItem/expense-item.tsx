@@ -6,6 +6,7 @@ import {
 } from "../../helpers/helper";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const FormSt = styled.form`
   display: flex;
@@ -35,6 +36,14 @@ const FormSt = styled.form`
       transform: scale(1.05);
     }
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  list-style: none;
+  color: #e3e3e3;
+  cursor: pointer;
+  position: relative;
 `;
 
 interface Expenses {
@@ -79,7 +88,9 @@ const ExpenseItem = (props: ExpensesTableProps) => {
       ) : (
         <></>
       )} */}
-      <td>{budget.name}</td>
+      <td>
+        <StyledLink to={`/budget/${budget.id}`}>{budget.name}</StyledLink>
+      </td>
       <td>
         {
           <FormSt onSubmit={handleSubmit}>
