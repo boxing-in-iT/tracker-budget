@@ -9,13 +9,13 @@ export async function logoutAction() {
     key: "userName",
   });
 
-  //   deleteItem({
-  //     key: "expenses",
-  //   });
+  deleteItem({
+    key: "expenses",
+  });
 
-  //   deleteItem({
-  //     key: "budgets",
-  //   });
+  deleteItem({
+    key: "budgets",
+  });
   toast.success("You`ve deleted your account");
   //return redirect
   return redirect("/");
