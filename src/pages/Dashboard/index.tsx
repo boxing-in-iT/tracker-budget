@@ -11,7 +11,6 @@ import AddBudgetForm from "./src/add-budget-form";
 import AddExpenseForm from "./src/add-expense-form";
 import { toast } from "react-toastify";
 import BudgetItem from "../../components/BudgetItem/budget-item";
-import ExpensesTable from "../../components/ExpencesTable/expenses-table";
 import Table from "../../components/Table/table-component";
 
 const DashboardWrapper = styled.div`
