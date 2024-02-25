@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AccountImage from "../../assets/img/account.svg";
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 
 const Header = styled.header`
   margin-top: 2rem;
@@ -82,6 +82,10 @@ const DeleteButton = styled.button`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 interface NavigationProps {
   userName: any;
 }
@@ -94,8 +98,12 @@ const Navigation = (props: NavigationProps) => {
         <Left>
           <Logo>BudgetTracker</Logo>
           <Menu>
-            <MenuItem>Main</MenuItem>
-            <MenuItem>Expenses</MenuItem>
+            <StyledLink to={"/"}>
+              <MenuItem>Main</MenuItem>
+            </StyledLink>
+            <StyledLink to={"/expenses"}>
+              <MenuItem>Expenses</MenuItem>
+            </StyledLink>
             <MenuItem>Info</MenuItem>
           </Menu>
         </Left>
