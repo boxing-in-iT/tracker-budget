@@ -110,3 +110,17 @@ export const formatCurrency = (amt: number) => {
 export const formateDateToLocalString = (epoch: number): string => {
   return new Date(epoch).toLocaleDateString();
 };
+
+//get all items for local storage
+export const getAllMatchingItems = ({
+  category,
+  key,
+  value,
+}: {
+  category: string;
+  key: string;
+  value: string;
+}) => {
+  const data = fetchData(category) ?? [];
+  return data.filter((item: any) => item[key] === value);
+};

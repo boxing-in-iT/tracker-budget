@@ -1,6 +1,11 @@
 import React from "react";
-import { formateDateToLocalString } from "../../helpers/helper";
+import {
+  deleteItem,
+  formateDateToLocalString,
+  getAllMatchingItems,
+} from "../../helpers/helper";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 const FormSt = styled.form`
   display: flex;
@@ -46,6 +51,22 @@ interface ExpensesTableProps {
 
 const ExpenseItem = (props: ExpensesTableProps) => {
   const { expense } = props;
+
+  const budget = getAllMatchingItems({
+    category: "budgets",
+    key: "id",
+    value: expense.budgetId,
+  })[0];
+
+  const handleSubmit = () => {
+    try {
+      deleteItem({ key: "expenses", id: expense.id });
+      return toast.success(`Expense deleted!`);
+    } catch (e) {
+      throw new Error("There was a problem deleteing your expense.");
+    }
+  };
+
   return (
     <>
       <td>{expense.name}</td>
@@ -58,10 +79,10 @@ const ExpenseItem = (props: ExpensesTableProps) => {
       ) : (
         <></>
       )} */}
-
+      <td>{budget.name}</td>
       <td>
         {
-          <FormSt method="post">
+          <FormSt onSubmit={handleSubmit}>
             <input type="hidden" name="_action" value="deleteExpense" />
             <input type="hidden" name="expenseId" value={expense.id} />
             <button
