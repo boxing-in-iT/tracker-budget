@@ -5,7 +5,7 @@ import {
   fetchData,
   waait,
 } from "../../helpers/helper";
-import { Navigate, useLoaderData } from "react-router-dom";
+import { Link, Navigate, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import AddBudgetForm from "./src/add-budget-form";
 import AddExpenseForm from "./src/add-expense-form";
@@ -63,6 +63,22 @@ export const GridMd = styled.div`
   display: grid;
   gap: 24px;
   width: 100%;
+`;
+
+const StyledLink = styled(Link)`
+  background-color: #f95959;
+  text-decoration: none;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d63737;
+  }
+  margin-left: auto; /* Прижимаем к правой стороне */
 `;
 
 export function dashboardLoader() {
@@ -162,6 +178,11 @@ const Dashboard = () => {
                       .sort((a, b) => b.createdAt - a.createdAt)
                       .slice(0, 5)}
                   />
+                  {expenses.length > 5 && (
+                    <StyledLink to={"/expenses"}>
+                      Посмотреть все расходы
+                    </StyledLink>
+                  )}
                 </GridMd>
               ) : (
                 <></>

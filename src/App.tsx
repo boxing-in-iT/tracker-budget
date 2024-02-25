@@ -19,6 +19,7 @@ import Main, { mainLoader } from "./components/Main";
 import Dashboard, { dashboardLoader } from "./pages/Dashboard";
 import { logoutAction } from "./actions/logoutAction";
 import WelcomePage from "./pages/WelcomePage";
+import ExpensePage, { expenseLoader } from "./pages/ExpensePage";
 // import { logoutAction } from "./actions/logoutAction";
 
 const Page = styled.div`
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
         loader: dashboardLoader,
+      },
+      {
+        path: "/expenses",
+        element: <ExpensePage />,
+        loader: expenseLoader,
       },
       {
         path: "/logout",
