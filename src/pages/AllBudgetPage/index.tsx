@@ -20,6 +20,9 @@ const FirstContainer = styled.div`
 
 const Title = styled.h1`
   color: #e3e3e3;
+  @media (max-width: 64em) {
+    font-size: 1rem;
+  }
 `;
 
 const Budgets = styled.div`
@@ -27,12 +30,22 @@ const Budgets = styled.div`
   width: 100%;
   flex-wrap: wrap;
   gap: 2rem;
+
+  /* @media (max-width: 64em) {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  } */
 `;
 
 const SearchInput = styled.input`
   padding: 8px;
   font-size: 16px;
   height: 30px; /* Добавлено свойство height */
+
+  @media (max-width: 64em) {
+    font-size: 8px;
+    height: 15px;
+  }
 `;
 
 export const budgetsLoader = async () => {
@@ -57,9 +70,11 @@ const AllBudgetPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Фильтрация бюджетов на основе введенного поискового запроса
-  const filteredBudgets = budgets.filter((budget) =>
-    budget.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredBudgets = budgets
+    ? budgets.filter((budget) =>
+        budget.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   return (
     <PageWrapper>
@@ -73,11 +88,15 @@ const AllBudgetPage = () => {
         />
       </FirstContainer>
 
-      <Budgets>
-        {filteredBudgets.map((budget, id) => (
-          <BudgetItem key={id} budget={budget} />
-        ))}
-      </Budgets>
+      {filteredBudgets.length === 0 ? (
+        <p>Вы не создали еще ни одного бюджета.</p>
+      ) : (
+        <Budgets>
+          {filteredBudgets.map((budget, id) => (
+            <BudgetItem key={id} budget={budget} />
+          ))}
+        </Budgets>
+      )}
     </PageWrapper>
   );
 };

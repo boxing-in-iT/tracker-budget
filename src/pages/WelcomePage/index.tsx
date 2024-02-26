@@ -40,6 +40,15 @@ const Content = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media (max-width: 64em) {
+    /* 1024px */
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+  }
 `;
 
 const Cards = styled.div`
@@ -47,6 +56,10 @@ const Cards = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+
+  @media (max-width: 64em) {
+    display: none;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -93,6 +106,7 @@ const WelcomePage = () => {
             />
           </Cards>
           {/* <ButtonContainer>Начать сейчас &rarr;</ButtonContainer> */}
+
           <LoginPage onSubmit={handleRegistration} />
         </Content>
       </Container>

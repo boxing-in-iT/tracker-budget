@@ -4,6 +4,9 @@ import ExpenseItem from "../ExpenseItem/expense-item";
 
 const TableContainer = styled.div`
   margin: 20px;
+  @media (max-width: 64em) {
+    margin: 0;
+  }
 `;
 
 const StyledTable = styled.table`
@@ -12,6 +15,14 @@ const StyledTable = styled.table`
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 64em) {
+    font-size: 14px; /* уменьшаем размер шрифта */
+  }
+
+  @media (max-width: 40em) {
+    font-size: 12px; /* еще больше уменьшаем на маленьких экранах */
+  }
 `;
 
 const TableHeader = styled.thead`
@@ -21,6 +32,10 @@ const TableHeader = styled.thead`
 const TableHeaderCell = styled.th`
   padding: 10px;
   text-align: left;
+
+  @media (max-width: 40em) {
+    padding: 5px; /* уменьшаем отступы на маленьких экранах */
+  }
 `;
 
 interface Expenses {
@@ -57,9 +72,9 @@ const Table = (props: ExpensesTableProps) => {
           </tr>
         </TableHeader>
         <TableBody>
-          {expenses.map((expense) => (
+          {expenses.map((expense, i) => (
             <TableRow key={expense.id}>
-              <ExpenseItem expense={expense} />
+              <ExpenseItem expense={expense} index={i} />
             </TableRow>
           ))}
         </TableBody>

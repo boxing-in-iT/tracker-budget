@@ -46,6 +46,10 @@ const StyledLink = styled(Link)`
   position: relative;
 `;
 
+const EvenStyledLink = styled(StyledLink)`
+  color: #000;
+`;
+
 interface Expenses {
   amount: number;
   budgetId: string;
@@ -56,10 +60,11 @@ interface Expenses {
 
 interface ExpensesTableProps {
   expense: Expenses;
+  index: number;
 }
 
 const ExpenseItem = (props: ExpensesTableProps) => {
-  const { expense } = props;
+  const { expense, index } = props;
 
   const budget = getAllMatchingItems({
     category: "budgets",
@@ -81,29 +86,27 @@ const ExpenseItem = (props: ExpensesTableProps) => {
       <td>{expense.name}</td>
       <td>{expense.amount}</td>
       <td>{formateDateToLocalString(expense.createdAt)}</td>
-      {/* {showBudget ? (
-        <td>
-          <Link to={`/budget/${budget.id}`}>{budget.name}</Link>
-        </td>
-      ) : (
-        <></>
-      )} */}
+
       <td>
-        <StyledLink to={`/budget/${budget.id}`}>{budget.name}</StyledLink>
+        {index % 2 === 0 ? (
+          <StyledLink to={`/budget/${budget.id}`}>{budget.name}</StyledLink>
+        ) : (
+          <EvenStyledLink to={`/budget/${budget.id}`}>
+            {budget.name}
+          </EvenStyledLink>
+        )}
       </td>
       <td>
-        {
-          <FormSt onSubmit={handleSubmit}>
-            <input type="hidden" name="_action" value="deleteExpense" />
-            <input type="hidden" name="expenseId" value={expense.id} />
-            <button
-              type="submit"
-              aria-aria-label={`Delete ${expense.name} expense`}
-            >
-              Delete
-            </button>
-          </FormSt>
-        }
+        <FormSt onSubmit={handleSubmit}>
+          <input type="hidden" name="_action" value="deleteExpense" />
+          <input type="hidden" name="expenseId" value={expense.id} />
+          <button
+            type="submit"
+            aria-aria-label={`Delete ${expense.name} expense`}
+          >
+            Delete
+          </button>
+        </FormSt>
       </td>
     </>
   );
