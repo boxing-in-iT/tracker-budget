@@ -101,8 +101,11 @@ const Navigation = (props: NavigationProps) => {
             <StyledLink to={"/"}>
               <MenuItem>Main</MenuItem>
             </StyledLink>
+            <StyledLink to={"/budgets"}>
+              <MenuItem>Бюджеты</MenuItem>
+            </StyledLink>
             <StyledLink to={"/expenses"}>
-              <MenuItem>Expenses</MenuItem>
+              <MenuItem>Расходы</MenuItem>
             </StyledLink>
             <MenuItem>Info</MenuItem>
           </Menu>

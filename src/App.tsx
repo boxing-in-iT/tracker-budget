@@ -21,6 +21,7 @@ import { logoutAction } from "./actions/logoutAction";
 import WelcomePage from "./pages/WelcomePage";
 import ExpensePage, { expenseLoader } from "./pages/ExpensePage";
 import BudgetPage, { budgetLoader } from "./pages/BudgetPage";
+import AllBudgetPage, { budgetsLoader } from "./pages/AllBudgetPage";
 // import { logoutAction } from "./actions/logoutAction";
 
 const Page = styled.div`
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
         path: "/expenses",
         element: <ExpensePage />,
         loader: expenseLoader,
+      },
+      {
+        path: "/budgets",
+        element: <AllBudgetPage />,
+        loader: budgetsLoader,
       },
       {
         path: "/budget/:id",

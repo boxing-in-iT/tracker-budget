@@ -17,6 +17,10 @@ const GridLg = styled.div`
   width: 100%;
 `;
 
+const Title = styled.h1`
+  color: #e3e3e3;
+`;
+
 const FlexLg = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -95,9 +99,9 @@ const BudgetPage = () => {
 
   return (
     <GridLg>
-      <h1>
-        <span>{budget.name}</span> Overview
-      </h1>
+      <Title>
+        Бюджет <span>{budget.name}</span>
+      </Title>
       <FlexLg>
         <BudgetItem budget={budget} />
         <AddExpenseForm budgets={[budget]} creatingExpense={creatingExpense} />

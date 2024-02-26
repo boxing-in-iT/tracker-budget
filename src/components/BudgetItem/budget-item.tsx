@@ -5,6 +5,7 @@ import {
   formatCurrency,
   formatPercentage,
 } from "../../helpers/helper";
+import { Link } from "react-router-dom";
 
 interface BudgetItemWrapperProps {
   accentColor?: string;
@@ -39,6 +40,15 @@ export const Progress = styled.progress`
   overflow: hidden;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  width: 30%;
+  /* list-style: none;
+  color: #e3e3e3;
+  cursor: pointer;
+  position: relative; */
+`;
+
 interface Budget {
   amount: number;
   color: string;
@@ -57,19 +67,21 @@ const BudgetItem = (props: BudgetItemProps) => {
 
   const spent = calculateSpentByBudget(id);
   return (
-    <BudgetItemWrapper accentColor={color}>
-      <ProgressText>
-        <h3>{name}</h3>
-        <p>{amount} Budget</p>
-      </ProgressText>
-      <Progress max={amount} value={spent}>
-        {formatPercentage(spent / amount)}
-      </Progress>
-      <ProgressText>
-        <small>{formatCurrency(spent)} spent</small>
-        <small>{formatCurrency(amount - spent)} remaining</small>
-      </ProgressText>
-    </BudgetItemWrapper>
+    <StyledLink to={`/budget/${budget.id}`}>
+      <BudgetItemWrapper accentColor={color}>
+        <ProgressText>
+          <h3>{name}</h3>
+          <p>{amount} Budget</p>
+        </ProgressText>
+        <Progress max={amount} value={spent}>
+          {formatPercentage(spent / amount)}
+        </Progress>
+        <ProgressText>
+          <small>{formatCurrency(spent)} spent</small>
+          <small>{formatCurrency(amount - spent)} remaining</small>
+        </ProgressText>
+      </BudgetItemWrapper>
+    </StyledLink>
   );
 };
 
