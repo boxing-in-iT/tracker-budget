@@ -191,7 +191,9 @@ const Navigation = (props: NavigationProps) => {
     <Header>
       <Container>
         <Left>
-          <Logo>BudgetTracker</Logo>
+          <StyledLink to={"/"}>
+            <Logo>BudgetTracker</Logo>
+          </StyledLink>
           <Menu click={click} menuBackground={menuBackground}>
             <StyledLink to={"/"}>
               <MenuItem onClick={handleClickMenuItem}>Main</MenuItem>
