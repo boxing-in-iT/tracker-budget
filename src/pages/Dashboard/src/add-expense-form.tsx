@@ -25,6 +25,10 @@ const Box = styled.div`
   padding: 2rem;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 64em) {
+    width: 16rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -69,6 +73,12 @@ const FormSt = styled.form`
 export const ExpenseInput = styled.div`
   display: flex;
   gap: 24px;
+
+  @media (max-width: 64em) {
+    flex-direction: column;
+
+    gap: 0;
+  }
 `;
 
 export const GridXs = styled.div`

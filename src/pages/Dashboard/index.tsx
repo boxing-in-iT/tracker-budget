@@ -35,10 +35,17 @@ const FlexLg = styled.div`
   flex-wrap: nowrap;
   align-items: start;
   gap: 32px;
+
+  @media (max-width: 64em) {
+    flex-direction: column;
+  }
 `;
 
 const FirstDiv = styled.div`
   width: 70%; /* 3/4 ширины */
+  @media (max-width: 64em) {
+    width: 100%; /* 3/4 ширины */
+  }
 `;
 
 const SecondDiv = styled.div`
@@ -57,6 +64,11 @@ export const Budgets = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+
+  @media (max-width: 64em) {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
 `;
 
 export const GridMd = styled.div`
@@ -97,9 +109,17 @@ interface Expenses {
   name: string;
 }
 
+interface Budget {
+  amount: number;
+  color: string;
+  createdAt: number;
+  id: string;
+  name: string;
+}
+
 export type UserData = {
   userName: string;
-  budgets: [];
+  budgets: Budget[];
   expenses: Expenses[];
 };
 
@@ -154,29 +174,31 @@ const Dashboard = () => {
           {budgets && budgets.length > 0 ? (
             <>
               <FlexLg>
-                {/* <FirstDiv> */}
                 <AddBudgetForm creatingBudget={creatingBudget} />
-                {/* </FirstDiv> */}
-                {/* <SecondDiv> */}
                 <AddExpenseForm
                   budgets={budgets}
                   creatingExpense={creatingExpense}
                 />
-                {/* </SecondDiv> */}
               </FlexLg>
               <h2>Созданные бюджеты</h2>
               <Budgets>
-                {budgets.map((budget, id) => (
-                  <BudgetItem key={id} budget={budget} />
-                ))}
+                {budgets
+                  .sort((a, b) => b.createdAt - a.createdAt)
+                  .slice(0, 3) // Первые три элемента
+                  .map((budget) => (
+                    <BudgetItem key={budget.id} budget={budget} />
+                  ))}
               </Budgets>
+              {budgets.length > 3 && (
+                <StyledLink to={"/budgets"}>Посмотреть все бюджеты</StyledLink>
+              )}
               {expenses && expenses.length > 0 ? (
                 <GridMd>
-                  <h2>Rescent expenses</h2>
+                  <h2>Недавние расходы</h2>
                   <Table
                     expenses={expenses
                       .sort((a, b) => b.createdAt - a.createdAt)
-                      .slice(0, 5)}
+                      .slice(0, 3)}
                   />
                   {expenses.length > 5 && (
                     <StyledLink to={"/expenses"}>
