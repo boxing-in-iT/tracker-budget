@@ -16,6 +16,21 @@ const Container = styled.div`
   margin: 0 auto;
   background-color: #233142;
   border-radius: 50px;
+
+  .mobile {
+    display: none;
+  }
+
+  @media (max-width: 64em) {
+    gap: 1rem;
+    .desktop {
+      display: none;
+    }
+
+    .mobile {
+      display: flex;
+    }
+  }
 `;
 
 const Left = styled.div`
@@ -228,7 +243,7 @@ const Navigation = (props: NavigationProps) => {
             click={click}
             onClick={() => {
               setClick(!click);
-              setMenuBackground(click ? "transparent" : "#455d7a"); // Изменено
+              setMenuBackground(click ? "transparent" : "#233142"); // Изменено
             }}
           >
             &nbsp;
