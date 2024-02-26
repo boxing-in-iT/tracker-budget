@@ -1,27 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   calculateSpentByBudget,
+  deleteItem,
   formatCurrency,
   formatPercentage,
 } from "../../helpers/helper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "../Modal/modal";
 
 interface BudgetItemWrapperProps {
   accentColor?: string;
 }
 
 export const BudgetItemWrapper = styled.div<BudgetItemWrapperProps>`
+  position: relative;
   display: grid;
   flex: 1 1 32.2%;
   max-width: 600px;
   background-color: rgb(242, 234, 244);
   border-radius: 25px;
-  border: 3px solid hsl(${(props) => props.accentColor}); /* использование props */
+  border: 3px solid hsl(${(props) => props.accentColor});
   text-decoration: none;
-  color: hsl(${(props) => props.accentColor}); /* использование props */
+  color: hsl(${(props) => props.accentColor});
   padding: 24px;
   gap: 16px;
+
+  &:hover > .delete-button {
+    opacity: 1;
+  }
+`;
+
+const DeleteButton = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: black;
+  background-color: #ff5f5f;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Добавленный transition для плавного появления */
+
+  &:hover {
+    background-color: #ff3333;
+  }
 `;
 
 export const ProgressText = styled.div`
@@ -43,10 +73,6 @@ export const Progress = styled.progress`
 const StyledLink = styled(Link)`
   text-decoration: none;
   width: 30%;
-  /* list-style: none;
-  color: #e3e3e3;
-  cursor: pointer;
-  position: relative; */
 `;
 
 interface Budget {
@@ -62,13 +88,42 @@ interface BudgetItemProps {
 }
 
 const BudgetItem = (props: BudgetItemProps) => {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const { budget } = props;
   const { id, name, amount, color } = budget;
 
+  const handleConfirmDelete = () => {
+    try {
+      deleteItem({ key: "budgets", id: budget.id });
+      setShowModal(false);
+    } catch (e) {
+      throw new Error("Возникла проблема при удалении бюджета.");
+    }
+  };
+
+  const deleteBudget = () => {
+    try {
+      setShowModal(true);
+    } catch (e) {
+      throw new Error("Возникла проблема при удалении бюджета.");
+    }
+  };
+
   const spent = calculateSpentByBudget(id);
   return (
-    <StyledLink to={`/budget/${budget.id}`}>
+    <>
+      {showModal && (
+        <Modal
+          onCancel={() => setShowModal(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+      {/* <StyledLink to={`/budget/${budget.id}`}> */}
       <BudgetItemWrapper accentColor={color}>
+        <DeleteButton className="delete-button" onClick={deleteBudget}>
+          X
+        </DeleteButton>
         <ProgressText>
           <h3>{name}</h3>
           <p>{amount} Budget</p>
@@ -81,7 +136,8 @@ const BudgetItem = (props: BudgetItemProps) => {
           <small>{formatCurrency(amount - spent)} remaining</small>
         </ProgressText>
       </BudgetItemWrapper>
-    </StyledLink>
+      {/* </StyledLink> */}
+    </>
   );
 };
 
