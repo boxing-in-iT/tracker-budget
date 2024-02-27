@@ -180,7 +180,7 @@ const Dashboard = () => {
                   creatingExpense={creatingExpense}
                 />
               </FlexLg>
-              <h2>Созданные бюджеты</h2>
+              {/* <h2>Созданные бюджеты</h2>
               <Budgets>
                 {budgets
                   .sort((a, b) => b.createdAt - a.createdAt)
@@ -188,7 +188,7 @@ const Dashboard = () => {
                   .map((budget) => (
                     <BudgetItem key={budget.id} budget={budget} />
                   ))}
-              </Budgets>
+              </Budgets> */}
               {budgets.length > 3 && (
                 <StyledLink to={"/budgets"}>Посмотреть все бюджеты</StyledLink>
               )}

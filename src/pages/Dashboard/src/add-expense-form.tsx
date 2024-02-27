@@ -67,7 +67,9 @@ const FormSt = styled.form`
     }
   }
 
-  ${formStyles}
+  @media (min-width: 768px) {
+    ${formStyles}
+  }
 `;
 
 export const ExpenseInput = styled.div`
@@ -166,7 +168,7 @@ const AddExpenseForm = (props: ExpenseProps) => {
           <Label htmlFor="newExpenseBudget">Budget Category</Label>
           <select
             name="newExpenseBudget"
-            id="newExpenceBudget"
+            id="newExpenseBudget"
             required
             value={budgetId}
             onChange={(e) => setBudgetId(e.target.value)}
