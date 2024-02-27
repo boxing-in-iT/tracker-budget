@@ -116,27 +116,28 @@ const BudgetItem = (props: BudgetItemProps) => {
       {showModal && (
         <Modal
           onCancel={() => setShowModal(false)}
-          onConfirm={handleConfirmDelete}
+          budgetId={budget.id}
+          // onConfirm={handleConfirmDelete}
         />
       )}
-      {/* <StyledLink to={`/budget/${budget.id}`}> */}
-      <BudgetItemWrapper accentColor={color}>
-        <DeleteButton className="delete-button" onClick={deleteBudget}>
+      <StyledLink to={`/budget/${budget.id}`}>
+        <BudgetItemWrapper accentColor={color}>
+          {/* <DeleteButton className="delete-button" onClick={deleteBudget}>
           X
-        </DeleteButton>
-        <ProgressText>
-          <h3>{name}</h3>
-          <p>{amount} Budget</p>
-        </ProgressText>
-        <Progress max={amount} value={spent}>
-          {formatPercentage(spent / amount)}
-        </Progress>
-        <ProgressText>
-          <small>{formatCurrency(spent)} spent</small>
-          <small>{formatCurrency(amount - spent)} remaining</small>
-        </ProgressText>
-      </BudgetItemWrapper>
-      {/* </StyledLink> */}
+        </DeleteButton> */}
+          <ProgressText>
+            <h3>{name}</h3>
+            <p>{amount} Budget</p>
+          </ProgressText>
+          <Progress max={amount} value={spent}>
+            {formatPercentage(spent / amount)}
+          </Progress>
+          <ProgressText>
+            <small>{formatCurrency(spent)} spent</small>
+            <small>{formatCurrency(amount - spent)} remaining</small>
+          </ProgressText>
+        </BudgetItemWrapper>
+      </StyledLink>
     </>
   );
 };

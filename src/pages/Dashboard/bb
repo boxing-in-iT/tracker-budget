@@ -109,7 +109,6 @@ interface ExpenseProps {
 
 const AddExpenseForm = (props: ExpenseProps) => {
   const { budgets } = props;
-
   const fetcher = useFetcher();
   const isSubmittimg = fetcher.state === "submitting";
 
@@ -148,51 +147,74 @@ const AddExpenseForm = (props: ExpenseProps) => {
     }
   `;
 
-  const formRef = useRef<HTMLFormElement>(null);
-  const focusRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef();
+  const focusRef = useRef();
 
   useEffect(() => {
     if (!isSubmittimg) {
       //clear form
-      formRef.current?.reset();
+      formRef.current.reset();
 
       //reset focus
-      focusRef.current?.focus();
+      focusRef.current.focus();
     }
   }, [isSubmittimg]);
+
+  const [expenseName, setExpenseName] = useState("");
+  const [expenseAmount, setExpenseAmount] = useState(0);
+  const [budgetId, setBudgetId] = useState(budgets[0].id);
+
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   {
+  //     e.preventDefault();
+
+  //     creatingExpense({
+  //       name: expenseName,
+  //       amount: expenseAmount,
+  //       budgetId: budgetId,
+  //     });
+  //   }
+  // };
 
   return (
     <Box>
       <Title>Добавить расходы</Title>
-      <FormSt method="post" className="grid-sm" ref={formRef}>
+      <FormSt ref={formRef}>
         <ExpenseInput>
           <GridXs>
             <Label>На что потратили</Label>
             <input
               type="text"
-              name="newExpense"
-              placeholder="e.g., Coffe"
-              ref={focusRef}
-              required
+              placeholder="Введите название"
+              value={expenseName}
+              onChange={(e) => setExpenseName(e.target.value)}
             />
           </GridXs>
           <GridXs>
-            <Label htmlFor="newExpenseAmount">Сума</Label>
+            <Label htmlFor="newBudgetAmount">Сумма</Label>
             <input
               type="number"
               step="0.01"
-              inputMode="decimal"
-              name="newExpenseAmount"
-              id="newExpenceAmount"
-              placeholder="e.g., 3.50"
+              name="newBudgetAmount"
+              id="newBudgetAmount"
+              placeholder="например, $350"
               required
+              inputMode="decimal"
+              value={expenseAmount}
+              onChange={(e) => setExpenseAmount(parseFloat(e.target.value))}
             />
           </GridXs>
         </ExpenseInput>
 
         <GridXs className="grid-xs">
           <Label htmlFor="newExpenseBudget">Budget Category</Label>
-          <select name="newExpenseBudget" id="newExpenceBudget" required>
+          <select
+            name="newExpenseBudget"
+            id="newExpenseBudget"
+            required
+            value={budgetId}
+            onChange={(e) => setBudgetId(e.target.value)}
+          >
             {budgets
               .sort((a, b) => a.createdAt - b.createdAt)
               .map((budget) => {
@@ -204,15 +226,7 @@ const AddExpenseForm = (props: ExpenseProps) => {
               })}
           </select>
         </GridXs>
-        <input type="hidden" name="_action" value="createExpense" />
-
-        <button type="submit" disabled={isSubmittimg}>
-          {isSubmittimg ? (
-            <span>Adding expence...</span>
-          ) : (
-            <span>Add Expence</span>
-          )}
-        </button>
+        <button type="submit">Добавить</button>
       </FormSt>
     </Box>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useFetcher, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const ModalContainer = styled.div`
@@ -50,11 +51,53 @@ const DeleteButton = styled(Button)`
 
 interface ModalProps {
   onCancel: () => void;
-  onConfirm: () => void;
+  budgetId: string;
+  // onConfirm: () => void;
 }
 
 const Modal = (props: ModalProps) => {
-  const { onCancel, onConfirm } = props;
+  const { onCancel, budgetId } = props;
+  const fetcher = useFetcher();
+
+  const FormSt = styled(fetcher.Form)`
+    /* display: flex;
+    flex-direction: column; */
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    justify-content: space-between;
+    input {
+      margin-bottom: 1.5rem;
+      height: 2.5rem;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      padding: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    button {
+      width: 100%;
+    }
+
+    /* button {
+      cursor: pointer;
+      border-radius: 5px;
+      height: 3rem;
+      border: none;
+      color: #ffffff;
+      background-color: #ff5722;
+      transition: background-color 0.3s, transform 0.2s;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      width: 45%;
+      &:hover {
+        background-color: #ff6f4a;
+        transform: scale(1.05);
+      }
+    } */
+  `;
+
   return (
     <ModalContainer>
       <ModalContent>
@@ -66,8 +109,13 @@ const Modal = (props: ModalProps) => {
             marginTop: "30px",
           }}
         >
-          <DeleteButton onClick={onCancel}>Отмена</DeleteButton>
-          <Button onClick={onConfirm}>Подтвердить</Button>
+          <FormSt method="post">
+            <DeleteButton onClick={onCancel}>Отмена</DeleteButton>
+            <input type="hidden" name="_action" value="deleteBudget" />
+            <input type="hidden" name="budgetId" value={budgetId} />
+
+            <Button type="submit">Подтвердить</Button>
+          </FormSt>
         </div>
       </ModalContent>
     </ModalContainer>

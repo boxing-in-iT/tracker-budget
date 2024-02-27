@@ -16,11 +16,11 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Main, { mainLoader } from "./components/Main";
-import Dashboard, { dashboardLoader } from "./pages/Dashboard";
+import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import { logoutAction } from "./actions/logoutAction";
 import WelcomePage from "./pages/WelcomePage";
 import ExpensePage, { expenseLoader } from "./pages/ExpensePage";
-import BudgetPage, { budgetLoader } from "./pages/BudgetPage";
+import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
 import AllBudgetPage, { budgetsLoader } from "./pages/AllBudgetPage";
 // import { logoutAction } from "./actions/logoutAction";
 
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
         loader: dashboardLoader,
+        action: dashboardAction,
       },
       {
         path: "/expenses",
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
         path: "/budget/:id",
         element: <BudgetPage />,
         loader: budgetLoader,
+        action: budgetAction,
       },
       {
         path: "/logout",
