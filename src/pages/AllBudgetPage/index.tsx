@@ -53,6 +53,11 @@ export const budgetsLoader = async () => {
   return { budgets };
 };
 
+export const budgetAction = async ({ request }: any) => {
+  const data = await request.formData();
+  const { _action, ...values } = Object.fromEntries(data);
+};
+
 interface Budget {
   amount: number;
   color: string;

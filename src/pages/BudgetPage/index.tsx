@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createExpense,
   deleteItem,
   getAllMatchingItems,
   waait,
 } from "../../helpers/helper";
-import { redirect, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  redirect,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import styled from "styled-components";
 import BudgetItem from "../../components/BudgetItem/budget-item";
 import AddExpenseForm from "../Dashboard/src/add-expense-form";
@@ -72,10 +77,95 @@ export const budgetLoader = async ({ params }: { params: any }) => {
   });
 
   if (!budget) {
-    throw new Error("The budget you’re trying to find doesn’t exist");
+    // throw new Error("The budget you’re trying to find doesn’t exist");
   }
   console.log(budget);
   return { budget, expenses };
+};
+
+export const budgetAction = async ({ request }: any) => {
+  const data = await request.formData();
+  const { _action, ...values } = Object.fromEntries(data);
+
+  // if (_action === "deleteBudget") {
+  //   try {
+  //     // Find and delete the budget
+  //     const budgetId = values.budgetId;
+  //     deleteItem({ key: "budgets", id: budgetId });
+
+  //     // Find and delete all expenses associated with the budget
+  //     const expensesToDelete: Expenses[] = getAllMatchingItems({
+  //       category: "expenses",
+  //       key: "budgetId",
+  //       value: budgetId,
+  //     });
+
+  //     expensesToDelete.forEach((expense) => {
+  //       deleteItem({ key: "expenses", id: expense.id });
+  //     });
+
+  //     return (
+  //       <>
+  //         <Navigate to="/budget" replace={true} />;
+  //         {toast.success(`Бюджет и все
+  //         связанные расходы удалены`)}
+  //       </>
+  //     );
+  //   } catch (e) {
+  //     throw new Error("Возникла проблема при удалении бюджета");
+  //   }
+  // }
+
+  if (_action === "deleteBudget") {
+    try {
+      // Find and delete the budget
+      const budgetId = values.budgetId;
+      deleteItem({ key: "budgets", id: budgetId });
+
+      // Find and delete all expenses associated with the budget
+      const expensesToDelete: Expenses[] = getAllMatchingItems({
+        category: "expenses",
+        key: "budgetId",
+        value: budgetId,
+      });
+
+      expensesToDelete.forEach((expense) => {
+        deleteItem({ key: "expenses", id: expense.id });
+      });
+
+      toast.success(`Бюджет и все связанные расходы удалены`);
+      return <Navigate to="/budgets" replace={true} />;
+    } catch (e) {
+      throw new Error("Возникла проблема при удалении бюджета");
+    }
+  }
+
+  if (_action === "deleteExpense") {
+    try {
+      //delete an expense
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
+      return toast.success(`Expense deleted!`);
+    } catch (e) {
+      throw new Error("There was a problem deleteing your expense.");
+    }
+  }
+
+  if (_action === "createExpense") {
+    try {
+      //create an expense
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        budgetId: values.newExpenseBudget,
+      });
+      return toast.success(`Expense ${values.newExpense} created!`);
+    } catch (e) {
+      throw new Error("There was a problem added your expense.");
+    }
+  }
 };
 
 interface Expenses {
@@ -102,67 +192,53 @@ export type UserData = {
 
 const BudgetPage = () => {
   const { budget, expenses } = useLoaderData() as UserData;
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const creatingExpense = async ({
-    name,
-    amount,
-    budgetId,
-  }: {
-    name: string;
-    amount: number;
-    budgetId: string;
-  }) => {
-    await waait();
-    try {
-      createExpense({ name: name, amount: amount, budgetId: budgetId });
-      return toast.success("Расход добавлен");
-    } catch (e) {
-      throw new Error("There was a problem creating your budget.");
-    }
-  };
+  useEffect(() => {
+    console.log(budget);
+  }, [budget, navigate]);
 
-  const deleteBudget = () => {
-    try {
-      deleteItem({ key: "budgets", id: budget.id });
-      setShowModal(false);
-      navigate("/budgets");
-    } catch (e) {
-      throw new Error("Возникла проблема при удалении бюджета.");
-    }
-  };
+  console.log(budget);
 
   return (
     <GridLg>
-      <FirstContainer>
-        <Title>
-          Бюджет <span>{budget.name}</span>
-        </Title>
-        <DeleteButton onClick={() => setShowModal(true)}>Удалить</DeleteButton>
-      </FirstContainer>
-      <FlexLg>
-        <BudgetItem budget={budget} />
-        <AddExpenseForm budgets={[budget]} creatingExpense={creatingExpense} />
-      </FlexLg>
-      {expenses && expenses.length > 0 && (
-        <GridMd>
-          <h2>
-            <span className="accent">{budget.name}</span> Expenses
-          </h2>
-          <Table expenses={expenses} />
-        </GridMd>
-      )}
-      {confirmDelete && (
-        <div>
-          <p>Вы уверены, что хотите удалить бюджет?</p>
-          <button onClick={() => setConfirmDelete(false)}>Отмена</button>
-          <button onClick={deleteBudget}>Подтвердить</button>
-        </div>
-      )}
-      {showModal && (
-        <Modal onCancel={() => setShowModal(false)} onConfirm={deleteBudget} />
+      {budget ? (
+        <>
+          <FirstContainer>
+            <Title>
+              Бюджет <span>{budget.name}</span>
+            </Title>
+            <DeleteButton onClick={() => setShowModal(true)}>
+              Удалить
+            </DeleteButton>
+          </FirstContainer>
+          <FlexLg>
+            <BudgetItem budget={budget} />
+            <AddExpenseForm budgets={[budget]} />
+          </FlexLg>
+          {expenses && expenses.length > 0 && (
+            <GridMd>
+              <h2>
+                <span className="accent">{budget.name}</span> Expenses
+              </h2>
+              <Table expenses={expenses} />
+            </GridMd>
+          )}
+          {confirmDelete && (
+            <div>
+              <p>Вы уверены, что хотите удалить бюджет?</p>
+              <button onClick={() => setConfirmDelete(false)}>Отмена</button>
+              <button>Подтвердить</button>
+            </div>
+          )}
+          {showModal && (
+            <Modal onCancel={() => setShowModal(false)} budgetId={budget.id} />
+          )}
+        </>
+      ) : (
+        <Navigate to={"/budgets"} />
       )}
     </GridLg>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import {
   createBudget,
   createExpense,
+  deleteItem,
   fetchData,
   waait,
 } from "../../helpers/helper";
@@ -101,6 +102,64 @@ export function dashboardLoader() {
   return { userName, budgets, expenses };
 }
 
+export async function dashboardAction({ request }: any) {
+  await waait();
+
+  const data = await request.formData();
+  const { _action, ...values } = Object.fromEntries(data);
+
+  if (_action === "createBudget")
+    try {
+      createBudget({
+        name: values.newBudget,
+        amount: values.newBudgetAmount,
+      });
+      return toast.success("Бюджет создан");
+    } catch (e) {
+      throw new Error("There was a problem creating your budget.");
+    }
+
+  if (_action === "createExpense") {
+    try {
+      //create an expense
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        budgetId: values.newExpenseBudget,
+      });
+      return toast.success(`Расход ${values.newExpense} добавлен!`);
+    } catch (e) {
+      throw new Error("There was a problem added your expense.");
+    }
+  }
+
+  if (_action === "deleteBudget") {
+    try {
+      //delete an expense
+      deleteItem({
+        key: "budgets",
+        id: values.budgetId,
+      });
+      return toast.success(`Бюджет удален`);
+    } catch (e) {
+      throw new Error("There was a problem deleteing your expense.");
+    }
+  }
+
+  if (_action === "deleteExpense") {
+    try {
+      //delete an expense
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
+      return toast.success(`Expense deleted!`);
+    } catch (e) {
+      throw new Error("There was a problem deleteing your expense.");
+    }
+  }
+}
+
 interface Expenses {
   amount: number;
   budgetId: string;
@@ -131,39 +190,39 @@ const Dashboard = () => {
     return <Navigate to={"/register"} />;
   }
 
-  const creatingBudget = async ({
-    name,
-    amount,
-  }: {
-    name: string;
-    amount: number;
-  }) => {
-    await waait();
-    try {
-      createBudget({ name: name, amount: amount });
-      return toast.success("Бюджет создан");
-    } catch (e) {
-      throw new Error("There was a problem creating your budget.");
-    }
-  };
+  // const creatingBudget = async ({
+  //   name,
+  //   amount,
+  // }: {
+  //   name: string;
+  //   amount: number;
+  // }) => {
+  //   await waait();
+  //   try {
+  //     createBudget({ name: name, amount: amount });
+  //     return toast.success("Бюджет создан");
+  //   } catch (e) {
+  //     throw new Error("There was a problem creating your budget.");
+  //   }
+  // };
 
-  const creatingExpense = async ({
-    name,
-    amount,
-    budgetId,
-  }: {
-    name: string;
-    amount: number;
-    budgetId: string;
-  }) => {
-    await waait();
-    try {
-      createExpense({ name: name, amount: amount, budgetId: budgetId });
-      return toast.success("Расход добавлен");
-    } catch (e) {
-      throw new Error("There was a problem creating your budget.");
-    }
-  };
+  // const creatingExpense = async ({
+  //   name,
+  //   amount,
+  //   budgetId,
+  // }: {
+  //   name: string;
+  //   amount: number;
+  //   budgetId: string;
+  // }) => {
+  //   await waait();
+  //   try {
+  //     createExpense({ name: name, amount: amount, budgetId: budgetId });
+  //     return toast.success("Расход добавлен");
+  //   } catch (e) {
+  //     throw new Error("There was a problem creating your budget.");
+  //   }
+  // };
 
   return userName ? (
     <>
@@ -174,13 +233,10 @@ const Dashboard = () => {
           {budgets && budgets.length > 0 ? (
             <>
               <FlexLg>
-                <AddBudgetForm creatingBudget={creatingBudget} />
-                <AddExpenseForm
-                  budgets={budgets}
-                  creatingExpense={creatingExpense}
-                />
+                <AddBudgetForm />
+                <AddExpenseForm budgets={budgets} />
               </FlexLg>
-              {/* <h2>Созданные бюджеты</h2>
+              <h2>Созданные бюджеты</h2>
               <Budgets>
                 {budgets
                   .sort((a, b) => b.createdAt - a.createdAt)
@@ -188,7 +244,7 @@ const Dashboard = () => {
                   .map((budget) => (
                     <BudgetItem key={budget.id} budget={budget} />
                   ))}
-              </Budgets> */}
+              </Budgets>
               {budgets.length > 3 && (
                 <StyledLink to={"/budgets"}>Посмотреть все бюджеты</StyledLink>
               )}
@@ -213,7 +269,7 @@ const Dashboard = () => {
           ) : (
             <FlexLg>
               <FirstDiv>
-                <AddBudgetForm creatingBudget={createBudget} />
+                <AddBudgetForm />
               </FirstDiv>
               <MessageContainer>
                 <p>Личный бюджет – это секрет финансовой свободы.</p>
