@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/tracker-budget/static/css/main.db668ce0.css",
+    "main.js": "/tracker-budget/static/js/main.70573422.js",
+    "static/js/453.65309287.chunk.js": "/tracker-budget/static/js/453.65309287.chunk.js",
+    "index.html": "/tracker-budget/index.html",
+    "static/media/account.svg": "/tracker-budget/static/media/account.50afc4b6f40399a8b7d54499e8d7b61a.svg",
+    "main.db668ce0.css.map": "/tracker-budget/static/css/main.db668ce0.css.map",
+    "main.70573422.js.map": "/tracker-budget/static/js/main.70573422.js.map",
+    "453.65309287.chunk.js.map": "/tracker-budget/static/js/453.65309287.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db668ce0.css",
+    "static/js/main.70573422.js"
+  ]
+}
