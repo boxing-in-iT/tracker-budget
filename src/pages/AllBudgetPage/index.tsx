@@ -31,10 +31,11 @@ const Budgets = styled.div`
   flex-wrap: wrap;
   gap: 2rem;
 
-  /* @media (max-width: 64em) {
+  @media (max-width: 64em) {
     flex-wrap: nowrap;
+    gap: 200px;
     overflow-x: scroll;
-  } */
+  }
 `;
 
 const SearchInput = styled.input`

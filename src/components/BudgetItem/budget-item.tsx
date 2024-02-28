@@ -29,6 +29,10 @@ export const BudgetItemWrapper = styled.div<BudgetItemWrapperProps>`
   &:hover > .delete-button {
     opacity: 1;
   }
+
+  @media (max-width: 64em) {
+    width: 200%;
+  }
 `;
 
 const DeleteButton = styled.div`

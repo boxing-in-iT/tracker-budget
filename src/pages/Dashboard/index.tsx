@@ -67,8 +67,10 @@ export const Budgets = styled.div`
   gap: 24px;
 
   @media (max-width: 64em) {
+    /* flex-direction: column; */
     flex-wrap: nowrap;
     overflow-x: scroll;
+    gap: 200px;
   }
 `;
 
