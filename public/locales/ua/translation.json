@@ -1,0 +1,44 @@
+{
+  "main": "Головна",
+  "budgets": "Бюджети",
+  "expenses": "Витрати",
+  "deleteUser": "Видалити користувача",
+
+  "hello": "Привіт",
+  "relateBudgets": "Створені бюджети",
+  "viewAllBudgets": "Подивитись всі бюджети",
+  "recentExpenses": "Недавні витрати",
+  "viewAllExpenses": "Подивитись всі витрати",
+  "helloMessage1": "Особистий бюджет – це таємниця фінансової свободи.",
+  "helloMessage2": "Створити бюджет, щоб почати!",
+
+  "createBudget": "Створити бюджет",
+  "budgetName": "Назва бюджету",
+  "enterName": "Введіть назву",
+  "amount": "Сума",
+  "eg": "наприклад, $350",
+  "creatingBudget": "Бюджет створюється...",
+  "budget": "Бюджет",
+  "spent": "витрачено",
+  "remaining": "залишилось",
+  "allBudget": "Всі ваші бюджети",
+  "searchBudget": "Пошук бюджета",
+  "notCreatedBudgets": "Ви не створили ще жодного бюджета",
+
+  "addExpenses": "Додати витрату",
+  "targetExpense": "На що витратили?",
+  "example": "наприклад Кава",
+  "budgetCategory": "Бюджет",
+  "addingExpense": "Витрата створюється...",
+  "allExpenses": "це всі ваші витрати",
+  "expensesNotCreated": "Витрати ще не створені",
+
+  "deleteBudget": "Ви впевнені, що хочете видалити бюджет?",
+  "cancel": "Відміна",
+  "accept": "Підтвердити",
+  "errorDeleteBudget": "Виникла проблема при видаленні бюджета",
+
+  "name": "Назва",
+  "date": "Дата",
+  "delete": "Видалити"
+}

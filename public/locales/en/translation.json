@@ -1,0 +1,44 @@
+{
+  "main": "Main",
+  "budgets": "Budgets",
+  "expenses": "Expenses",
+  "deleteUser": "Delete User",
+
+  "hello": "Hello",
+  "relateBudgets": "Related Budgets",
+  "viewAllBudgets": "View All Budgets",
+  "recentExpenses": "Recent Expenses",
+  "viewAllExpenses": "View All Expenses",
+  "helloMessage1": "Personal budgeting is the secret to financial freedom.",
+  "helloMessage2": "Create a budget to get started!",
+
+  "createBudget": "Create Budget",
+  "budgetName": "Budget Name",
+  "enterName": "Enter name",
+  "amount": "Amount",
+  "eg": "e.g., $350",
+  "creatingBudget": "Creating Budget...",
+  "budget": "Budget",
+  "spent": "Spent",
+  "remaining": "Remaining",
+  "allBudget": "All Your Budgets",
+  "searchBudget": "Search Budget",
+  "notCreatedBudgets": "You haven't created any budgets yet",
+
+  "addExpenses": "Add Expense",
+  "targetExpense": "What was it for?",
+  "example": "e.g., Coffee",
+  "budgetCategory": "Budget",
+  "addingExpense": "Adding Expense...",
+  "allExpenses": "These are all your expenses",
+  "expensesNotCreated": "Expenses not created yet",
+
+  "deleteBudget": "Are you sure you want to delete the budget?",
+  "cancel": "Cancel",
+  "accept": "Accept",
+  "errorDeleteBudget": "There was a problem deleting the budget",
+
+  "name": "Name",
+  "date": "Date",
+  "delete": "Delete"
+}

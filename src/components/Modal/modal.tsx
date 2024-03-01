@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useFetcher, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -56,6 +57,7 @@ interface ModalProps {
 }
 
 const Modal = (props: ModalProps) => {
+  const { t, i18n } = useTranslation();
   const { onCancel, budgetId } = props;
   const fetcher = useFetcher();
 
@@ -101,7 +103,7 @@ const Modal = (props: ModalProps) => {
   return (
     <ModalContainer>
       <ModalContent>
-        <p>Вы уверены, что хотите удалить бюджет?</p>
+        <p>{t("deleteBudget")}</p>
         <div
           style={{
             display: "flex",
@@ -110,11 +112,11 @@ const Modal = (props: ModalProps) => {
           }}
         >
           <FormSt method="post">
-            <DeleteButton onClick={onCancel}>Отмена</DeleteButton>
+            <DeleteButton onClick={onCancel}>{t("cancel")}</DeleteButton>
             <input type="hidden" name="_action" value="deleteBudget" />
             <input type="hidden" name="budgetId" value={budgetId} />
 
-            <Button type="submit">Подтвердить</Button>
+            <Button type="submit">{t("accept")}</Button>
           </FormSt>
         </div>
       </ModalContent>

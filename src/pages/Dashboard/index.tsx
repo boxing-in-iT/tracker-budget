@@ -13,6 +13,7 @@ import AddExpenseForm from "./src/add-expense-form";
 import { toast } from "react-toastify";
 import BudgetItem from "../../components/BudgetItem/budget-item";
 import Table from "../../components/Table/table-component";
+import { useTranslation } from "react-i18next";
 
 const DashboardWrapper = styled.div`
   display: grid;
@@ -183,6 +184,7 @@ export type UserData = {
 };
 
 const Dashboard = () => {
+  const { t, i18n } = useTranslation();
   const { userName, budgets, expenses } = useLoaderData() as UserData;
   console.log("UserName: ", userName);
 
@@ -190,44 +192,12 @@ const Dashboard = () => {
     return <Navigate to={"/register"} />;
   }
 
-  // const creatingBudget = async ({
-  //   name,
-  //   amount,
-  // }: {
-  //   name: string;
-  //   amount: number;
-  // }) => {
-  //   await waait();
-  //   try {
-  //     createBudget({ name: name, amount: amount });
-  //     return toast.success("Бюджет создан");
-  //   } catch (e) {
-  //     throw new Error("There was a problem creating your budget.");
-  //   }
-  // };
-
-  // const creatingExpense = async ({
-  //   name,
-  //   amount,
-  //   budgetId,
-  // }: {
-  //   name: string;
-  //   amount: number;
-  //   budgetId: string;
-  // }) => {
-  //   await waait();
-  //   try {
-  //     createExpense({ name: name, amount: amount, budgetId: budgetId });
-  //     return toast.success("Расход добавлен");
-  //   } catch (e) {
-  //     throw new Error("There was a problem creating your budget.");
-  //   }
-  // };
-
   return userName ? (
     <>
       <DashboardWrapper>
-        <Title>Привет, {userName}</Title>
+        <Title>
+          {t("hello")}, {userName}
+        </Title>
 
         <GridSm>
           {budgets && budgets.length > 0 ? (
@@ -236,7 +206,7 @@ const Dashboard = () => {
                 <AddBudgetForm />
                 <AddExpenseForm budgets={budgets} />
               </FlexLg>
-              <h2>Созданные бюджеты</h2>
+              <h2>{t("relateBudgets")}</h2>
               <Budgets>
                 {budgets
                   .sort((a, b) => b.createdAt - a.createdAt)
@@ -246,11 +216,11 @@ const Dashboard = () => {
                   ))}
               </Budgets>
               {budgets.length > 3 && (
-                <StyledLink to={"/budgets"}>Посмотреть все бюджеты</StyledLink>
+                <StyledLink to={"/budgets"}>{t("viewAllBudgets")}</StyledLink>
               )}
               {expenses && expenses.length > 0 ? (
                 <GridMd>
-                  <h2>Недавние расходы</h2>
+                  <h2>{t("recentExpenses")}</h2>
                   <Table
                     expenses={expenses
                       .sort((a, b) => b.createdAt - a.createdAt)
@@ -258,7 +228,7 @@ const Dashboard = () => {
                   />
                   {expenses.length > 5 && (
                     <StyledLink to={"/expenses"}>
-                      Посмотреть все расходы
+                      {t("viewAllExpenses")}
                     </StyledLink>
                   )}
                 </GridMd>
@@ -272,8 +242,8 @@ const Dashboard = () => {
                 <AddBudgetForm />
               </FirstDiv>
               <MessageContainer>
-                <p>Личный бюджет – это секрет финансовой свободы.</p>
-                <p>Создайте бюджет, чтобы начать!</p>
+                <p>{t("helloMessage1")}</p>
+                <p>{t("helloMessage2")}</p>
               </MessageContainer>
             </FlexLg>
           )}

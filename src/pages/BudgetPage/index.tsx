@@ -17,6 +17,7 @@ import AddExpenseForm from "../Dashboard/src/add-expense-form";
 import { toast } from "react-toastify";
 import Table from "../../components/Table/table-component";
 import Modal from "../../components/Modal/modal";
+import { useTranslation } from "react-i18next";
 
 const GridLg = styled.div`
   display: grid;
@@ -86,35 +87,6 @@ export const budgetLoader = async ({ params }: { params: any }) => {
 export const budgetAction = async ({ request }: any) => {
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
-
-  // if (_action === "deleteBudget") {
-  //   try {
-  //     // Find and delete the budget
-  //     const budgetId = values.budgetId;
-  //     deleteItem({ key: "budgets", id: budgetId });
-
-  //     // Find and delete all expenses associated with the budget
-  //     const expensesToDelete: Expenses[] = getAllMatchingItems({
-  //       category: "expenses",
-  //       key: "budgetId",
-  //       value: budgetId,
-  //     });
-
-  //     expensesToDelete.forEach((expense) => {
-  //       deleteItem({ key: "expenses", id: expense.id });
-  //     });
-
-  //     return (
-  //       <>
-  //         <Navigate to="/budget" replace={true} />;
-  //         {toast.success(`Бюджет и все
-  //         связанные расходы удалены`)}
-  //       </>
-  //     );
-  //   } catch (e) {
-  //     throw new Error("Возникла проблема при удалении бюджета");
-  //   }
-  // }
 
   if (_action === "deleteBudget") {
     try {
@@ -191,6 +163,7 @@ export type UserData = {
 };
 
 const BudgetPage = () => {
+  const { t } = useTranslation();
   const { budget, expenses } = useLoaderData() as UserData;
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -208,10 +181,10 @@ const BudgetPage = () => {
         <>
           <FirstContainer>
             <Title>
-              Бюджет <span>{budget.name}</span>
+              {t("budget")} <span>{budget.name}</span>
             </Title>
             <DeleteButton onClick={() => setShowModal(true)}>
-              Удалить
+              {t("delete")}
             </DeleteButton>
           </FirstContainer>
           <FlexLg>
@@ -221,16 +194,18 @@ const BudgetPage = () => {
           {expenses && expenses.length > 0 && (
             <GridMd>
               <h2>
-                <span className="accent">{budget.name}</span> Expenses
+                <span className="accent">{budget.name}</span> {t("expenses")}
               </h2>
               <Table expenses={expenses} />
             </GridMd>
           )}
           {confirmDelete && (
             <div>
-              <p>Вы уверены, что хотите удалить бюджет?</p>
-              <button onClick={() => setConfirmDelete(false)}>Отмена</button>
-              <button>Подтвердить</button>
+              <p>{t("deleteBudget")}</p>
+              <button onClick={() => setConfirmDelete(false)}>
+                {t("cancel")}
+              </button>
+              <button>{t("accept")}</button>
             </div>
           )}
           {showModal && (
