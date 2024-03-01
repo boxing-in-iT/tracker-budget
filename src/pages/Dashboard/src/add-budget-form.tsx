@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useFetcher } from "react-router-dom";
 import styled from "styled-components";
 
@@ -58,6 +59,7 @@ const Label = styled.label`
 `;
 
 const AddBudgetForm = () => {
+  const { t, i18n } = useTranslation();
   const fetcher = useFetcher();
   const isSubmittimg = fetcher.state === "submitting";
 
@@ -103,26 +105,26 @@ const AddBudgetForm = () => {
 
   return (
     <Box>
-      <Title>Создать бюджет</Title>
+      <Title>{t("createBudget")}</Title>
       <FormSt method="post" ref={formRef}>
         <GridXs>
-          <Label>Название бюджета</Label>
+          <Label>{t("budgetName")}</Label>
           <input
             type="text"
-            placeholder="Введите название"
+            placeholder={t("enterName")}
             name="newBudget"
             id="newBudget"
             ref={focusRef}
           />
         </GridXs>
         <GridXs>
-          <Label htmlFor="newBudgetAmount">Сумма</Label>
+          <Label htmlFor="newBudgetAmount">{t("amount")}</Label>
           <input
             type="number"
             step="0.01"
             name="newBudgetAmount"
             id="newBudgetAmount"
-            placeholder="например, $350"
+            placeholder={t("eg")}
             required
             inputMode="decimal"
           />
@@ -130,9 +132,9 @@ const AddBudgetForm = () => {
         <input type="hidden" name="_action" value="createBudget" />
         <button type="submit" disabled={isSubmittimg}>
           {isSubmittimg ? (
-            <span>Creating budget...</span>
+            <span>{t("creatingBudget")}</span>
           ) : (
-            <span>Create Budget</span>
+            <span>{t("createBudget")}</span>
           )}
         </button>
       </FormSt>

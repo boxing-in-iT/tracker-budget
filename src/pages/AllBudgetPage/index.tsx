@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { fetchData } from "../../helpers/helper";
 import { useLoaderData } from "react-router-dom";
 import BudgetItem from "../../components/BudgetItem/budget-item";
+import { useTranslation } from "react-i18next";
 
 const PageWrapper = styled.div`
   display: grid;
@@ -72,6 +73,7 @@ export type UserData = {
 };
 
 const AllBudgetPage = () => {
+  const { t, i18n } = useTranslation();
   const { budgets } = useLoaderData() as UserData;
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -85,17 +87,17 @@ const AllBudgetPage = () => {
   return (
     <PageWrapper>
       <FirstContainer>
-        <Title>Все ваши бюджеты</Title>
+        <Title>{t("allBudget")}</Title>
         <SearchInput
           type="text"
-          placeholder="Поиск бюджета"
+          placeholder={t("searchBudget")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </FirstContainer>
 
       {filteredBudgets.length === 0 ? (
-        <p>Вы не создали еще ни одного бюджета.</p>
+        <p>{t("notCreatedBudgets")}</p>
       ) : (
         <Budgets>
           {filteredBudgets.map((budget, id) => (

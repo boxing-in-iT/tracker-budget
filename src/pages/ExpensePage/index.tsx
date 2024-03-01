@@ -3,6 +3,7 @@ import { fetchData } from "../../helpers/helper";
 import Table from "../../components/Table/table-component";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const PageWrapper = styled.div``;
 
@@ -30,16 +31,19 @@ export type UserData = {
 };
 
 const ExpensePage = () => {
+  const { t, i18n } = useTranslation();
   const { expenses, userName } = useLoaderData() as UserData;
   return (
     <PageWrapper>
       {expenses && expenses.length > 0 ? (
         <>
-          <Title>{userName}, это ваши расходы</Title>
+          <Title>
+            {userName}, {t("allExpenses")}
+          </Title>
           <Table expenses={expenses} />
         </>
       ) : (
-        <Title>Expenses not created</Title>
+        <Title>{t("expensesNotCreated")}</Title>
       )}
     </PageWrapper>
   );

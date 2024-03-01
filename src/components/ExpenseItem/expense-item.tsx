@@ -7,6 +7,7 @@ import {
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { Link, useFetcher } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // const FormSt = styled.form`
 //   display: flex;
@@ -64,6 +65,7 @@ interface ExpensesTableProps {
 }
 
 const ExpenseItem = (props: ExpensesTableProps) => {
+  const { t } = useTranslation();
   const { expense, index } = props;
   const fetcher = useFetcher();
   const budget = getAllMatchingItems({
@@ -134,7 +136,7 @@ const ExpenseItem = (props: ExpensesTableProps) => {
             type="submit"
             aria-aria-label={`Delete ${expense.name} expense`}
           >
-            Delete
+            {t("delete")}
           </button>
         </FormSt>
       </td>

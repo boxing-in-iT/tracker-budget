@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useFetcher } from "react-router-dom";
 import styled from "styled-components";
 
@@ -108,6 +109,7 @@ interface ExpenseProps {
 }
 
 const AddExpenseForm = (props: ExpenseProps) => {
+  const { t, i18n } = useTranslation();
   const { budgets } = props;
 
   const fetcher = useFetcher();
@@ -163,35 +165,35 @@ const AddExpenseForm = (props: ExpenseProps) => {
 
   return (
     <Box>
-      <Title>Добавить расходы</Title>
+      <Title>{t("addExpenses")}</Title>
       <FormSt method="post" className="grid-sm" ref={formRef}>
         <ExpenseInput>
           <GridXs>
-            <Label>На что потратили</Label>
+            <Label>{t("targetExpense")}</Label>
             <input
               type="text"
               name="newExpense"
-              placeholder="e.g., Coffe"
+              placeholder={t("example")}
               ref={focusRef}
               required
             />
           </GridXs>
           <GridXs>
-            <Label htmlFor="newExpenseAmount">Сума</Label>
+            <Label htmlFor="newExpenseAmount">{t("amount")}</Label>
             <input
               type="number"
               step="0.01"
               inputMode="decimal"
               name="newExpenseAmount"
               id="newExpenceAmount"
-              placeholder="e.g., 3.50"
+              placeholder={t("eg")}
               required
             />
           </GridXs>
         </ExpenseInput>
 
         <GridXs className="grid-xs">
-          <Label htmlFor="newExpenseBudget">Budget Category</Label>
+          <Label htmlFor="newExpenseBudget">{t("budgetCategory")}</Label>
           <select name="newExpenseBudget" id="newExpenceBudget" required>
             {budgets
               .sort((a, b) => a.createdAt - b.createdAt)
@@ -208,9 +210,9 @@ const AddExpenseForm = (props: ExpenseProps) => {
 
         <button type="submit" disabled={isSubmittimg}>
           {isSubmittimg ? (
-            <span>Adding expence...</span>
+            <span>{t("addingExpense")}</span>
           ) : (
-            <span>Add Expence</span>
+            <span>{t("addExpenses")}</span>
           )}
         </button>
       </FormSt>

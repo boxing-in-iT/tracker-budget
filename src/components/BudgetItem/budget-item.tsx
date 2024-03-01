@@ -8,6 +8,7 @@ import {
 } from "../../helpers/helper";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal/modal";
+import { useTranslation } from "react-i18next";
 
 interface BudgetItemWrapperProps {
   accentColor?: string;
@@ -92,27 +93,11 @@ interface BudgetItemProps {
 }
 
 const BudgetItem = (props: BudgetItemProps) => {
+  const { t, i18n } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { budget } = props;
   const { id, name, amount, color } = budget;
-
-  const handleConfirmDelete = () => {
-    try {
-      deleteItem({ key: "budgets", id: budget.id });
-      setShowModal(false);
-    } catch (e) {
-      throw new Error("Возникла проблема при удалении бюджета.");
-    }
-  };
-
-  const deleteBudget = () => {
-    try {
-      setShowModal(true);
-    } catch (e) {
-      throw new Error("Возникла проблема при удалении бюджета.");
-    }
-  };
 
   const spent = calculateSpentByBudget(id);
   return (
@@ -126,19 +111,22 @@ const BudgetItem = (props: BudgetItemProps) => {
       )}
       <StyledLink to={`/budget/${budget.id}`}>
         <BudgetItemWrapper accentColor={color}>
-          {/* <DeleteButton className="delete-button" onClick={deleteBudget}>
-          X
-        </DeleteButton> */}
           <ProgressText>
             <h3>{name}</h3>
-            <p>{amount} Budget</p>
+            <p>
+              {amount} {t("budget")}
+            </p>
           </ProgressText>
           <Progress max={amount} value={spent}>
             {formatPercentage(spent / amount)}
           </Progress>
           <ProgressText>
-            <small>{formatCurrency(spent)} spent</small>
-            <small>{formatCurrency(amount - spent)} remaining</small>
+            <small>
+              {formatCurrency(spent)} {t("spent")}
+            </small>
+            <small>
+              {formatCurrency(amount - spent)} {t("remaining")}
+            </small>
           </ProgressText>
         </BudgetItemWrapper>
       </StyledLink>

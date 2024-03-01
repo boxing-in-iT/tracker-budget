@@ -3,6 +3,11 @@ import styled from "styled-components";
 import AccountImage from "../../assets/img/account.svg";
 import { Form, Link } from "react-router-dom";
 
+import UA from "../../assets/img/ua.svg";
+import USA from "../../assets/img/usa.svg";
+import DropdownLanguage from "./src/dropdown-language";
+import { useTranslation } from "react-i18next";
+
 const Header = styled.header`
   margin-top: 2rem;
 `;
@@ -140,6 +145,29 @@ const DeleteButton = styled.button`
   }
 `;
 
+const LanguageSwitch = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 10%;
+`;
+
+const Language = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const LanguageIcon = styled.img`
+  width: 2rem;
+  margin-right: 0.5rem; /* Добавлен отступ между иконкой и текстом */
+`;
+
+const LanguageName = styled.h4`
+  margin-right: 1rem; /* Добавлен отступ между текстом и следующим элементом */
+`;
+
 interface HamburgerMenuProps extends HTMLAttributes<HTMLSpanElement> {
   click?: boolean;
 }
@@ -192,6 +220,7 @@ interface NavigationProps {
 }
 
 const Navigation = (props: NavigationProps) => {
+  const { t, i18n } = useTranslation();
   const [click, setClick] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [menuBackground, setMenuBackground] = useState("transparent");
@@ -200,6 +229,11 @@ const Navigation = (props: NavigationProps) => {
   const handleClickMenuItem = () => {
     setClick(false); // Закрыть меню при клике на пункт меню
     setMenuBackground("transparent"); // Изменено
+  };
+
+  const handleLangChange = (evt: string) => {
+    console.log(evt);
+    i18n.changeLanguage(evt);
   };
 
   return (
@@ -211,16 +245,29 @@ const Navigation = (props: NavigationProps) => {
           </StyledLink>
           <Menu click={click} menuBackground={menuBackground}>
             <StyledLink to={"/"}>
-              <MenuItem onClick={handleClickMenuItem}>Main</MenuItem>
+              <MenuItem onClick={handleClickMenuItem}>{t("main")}</MenuItem>
             </StyledLink>
             <StyledLink to={"/budgets"}>
-              <MenuItem onClick={handleClickMenuItem}>Бюджеты</MenuItem>
+              <MenuItem onClick={handleClickMenuItem}>{t("budgets")}</MenuItem>
             </StyledLink>
             <StyledLink to={"/expenses"}>
-              <MenuItem onClick={handleClickMenuItem}>Расходы</MenuItem>
+              <MenuItem onClick={handleClickMenuItem}>{t("expenses")}</MenuItem>
             </StyledLink>
           </Menu>
         </Left>
+
+        {/* Change to drppdown */}
+        <LanguageSwitch>
+          <Language onClick={() => handleLangChange("ua")}>
+            <LanguageIcon src={UA} />
+            <LanguageName>UA</LanguageName>
+          </Language>
+          <Language onClick={() => handleLangChange("en")}>
+            <LanguageIcon src={USA} />
+            <LanguageName>USA</LanguageName>
+          </Language>
+        </LanguageSwitch>
+        {/* <DropdownLanguage /> */}
 
         <Account>
           <ImageAccount src={AccountImage} />
@@ -235,7 +282,7 @@ const Navigation = (props: NavigationProps) => {
                 }
               }}
             >
-              <DeleteButton type="submit">Delete User</DeleteButton>
+              <DeleteButton type="submit">{t("deleteUser")}</DeleteButton>
             </Form>
           )}
           <HamburgerMenu

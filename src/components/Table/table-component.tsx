@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ExpenseItem from "../ExpenseItem/expense-item";
+import { useTranslation } from "react-i18next";
 
 const TableContainer = styled.div`
   margin: 20px;
@@ -59,6 +60,7 @@ export const TableRow = styled.tr`
 `;
 
 const Table = (props: ExpensesTableProps) => {
+  const { t } = useTranslation();
   const { expenses } = props;
 
   return (
@@ -66,7 +68,13 @@ const Table = (props: ExpensesTableProps) => {
       <StyledTable>
         <TableHeader>
           <tr>
-            {["Name", "Amount", "Date", "Budget", ""].map((i, index) => (
+            {[
+              `${t("name")}`,
+              `${t("amount")}`,
+              `${t("date")}`,
+              `${t("budget")}`,
+              "",
+            ].map((i, index) => (
               <TableHeaderCell key={index}>{i}</TableHeaderCell>
             ))}
           </tr>
